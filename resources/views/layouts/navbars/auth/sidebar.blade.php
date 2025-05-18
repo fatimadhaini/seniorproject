@@ -257,17 +257,7 @@
                     <span class="nav-link-text ms-1">Classes</span>
                 </a>
             </li>
-            <li class="nav-item pb-2">
-                <a class="nav-link {{ Str::startsWith(Route::currentRouteName(), 'camera.parent') ? 'active' : '' }}"
-                    href="{{ route('camera.parent') }}">
-                    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
-                            <path class="color-background" d="M192 64c-35.3 0-64 28.7-64 64v256c0 35.3 28.7 64 64 64h192c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H192zM0 128v256c0 17.7 14.3 32 32 32h48V96H32C14.3 96 0 110.3 0 128zm576 0l-96 72v112l96 72V128z" />
-                        </svg>
-                    </div>
-                    <span class="nav-link-text ms-1">View Student Camera</span>
-                </a>
-            </li>
+            
 
 
             @endif

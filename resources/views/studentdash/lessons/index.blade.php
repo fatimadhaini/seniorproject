@@ -85,7 +85,7 @@
                     didOpen: () => Swal.showLoading(),
                     allowOutsideClick: false
                 });
-                speakText('Generating Braille. Please wait while we convert this lesson to Braille format.');
+                speak('Generating Braille. Please wait while we convert this lesson to Braille format.');
 
                 $.ajax({
                     url: "{{ route('translate-to-braille') }}",
@@ -376,4 +376,3 @@
 
 
 </x-layouts.app>
-@include('studentdash.sidebar')

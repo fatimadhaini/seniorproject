@@ -303,4 +303,3 @@
 </script>
 
 
-@include('studentdash.sidebar')

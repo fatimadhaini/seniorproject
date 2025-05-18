@@ -239,18 +239,34 @@
         recognition.onresult = (event) => {
             let spokenText = event.results[0][0].transcript.toLowerCase().trim().replace(/\.$/, '');
             console.log("Recognized:", spokenText);
-
             if (currentStep === 'ask-assist') {
                 if (spokenText.includes("yes")) {
-                    speak("Great, let's begin.", () => {
-                        currentStep = 'email';
-                        askNext();
+                    speak("Would you like to use Face ID login or Voice login?", () => {
+                        currentStep = 'choose-method';
+                        recognition.start();
                     });
                 } else {
                     speak("Voice assistance is turned off.");
                 }
                 return;
             }
+
+            if (currentStep === 'choose-method') {
+                if (spokenText.includes("face")) {
+                    speak("Starting Face ID login.", () => {
+                        document.getElementById("faceLogin").click(); // Trigger Face ID login
+                    });
+                } else if (spokenText.includes("voice")) {
+                    speak("Great, let's begin voice login.", () => {
+                        currentStep = 'email';
+                        askNext();
+                    });
+                } else {
+                    speak("Please say Face or Voice.", () => recognition.start());
+                }
+                return;
+            }
+
 
             if (currentStep === 'email') {
                 spokenText = spokenText
@@ -375,7 +391,7 @@
         const result = await response.json();
         if (result.success) {
             Swal.fire("Face match successful!", "Redirecting...", "success");
-console.log(result);
+            console.log(result);
             let redirectUrl = "/dashboard"; // default
 
             switch (result.role) {

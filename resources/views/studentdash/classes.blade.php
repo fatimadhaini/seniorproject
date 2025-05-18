@@ -428,4 +428,3 @@
 </x-layouts.app>
 
 
-@include('studentdash.sidebar')

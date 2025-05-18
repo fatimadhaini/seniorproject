@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Smalot\PdfParser\Parser;
 
 
+
 class BrailleController extends Controller
 {
     public function translate(Request $request)

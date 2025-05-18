@@ -621,5 +621,3 @@
 </style>
 
 
-
-@include('studentdash.sidebar')

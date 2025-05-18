@@ -51,7 +51,19 @@ class DashboardController extends Controller
                 $academicYearProgress = round(($daysPassed / $totalDays) * 100);
             }
         }
-
+        $sectionCapacities = Section::withCount('students') // or the correct relationship name
+            ->whereHas('academicYear', function ($query) {
+                $query->where('status', 'pending');
+            })
+            ->with('grade') // assuming each section belongs to a grade
+            ->get()
+            ->map(function ($section) {
+                return [
+                    'name' => $section->grade->name . ' - ' . $section->name,
+                    'capacity' => $section->capacity ?? 30, // fallback to 30 if capacity is null
+                    'students' => $section->students_count,
+                ];
+            });
         return view('dashboard', compact(
             'studentCount',
             'teacherCount',
@@ -59,7 +71,8 @@ class DashboardController extends Controller
             'pendingApplicationCount',
             'openSectionCount',
             'academicYearProgress',
-            'academicYear'
+            'academicYear',
+            'sectionCapacities'
         ));
     }
 }

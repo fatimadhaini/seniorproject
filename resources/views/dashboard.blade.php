@@ -112,7 +112,7 @@
                                             fill-rule="evenodd"></path>
                                     </svg>
                                 </button>
-                             
+
                                 <button class="bn" data-bs-toggle="modal" data-bs-target="#addExamModal">
                                     Add Exam
                                     <svg fill="currentColor" viewBox="0 0 24 24" class="ic">
@@ -141,11 +141,12 @@
                                         <path
                                             clip-rule="evenodd"
                                             d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
-                                            fill-rule="evenodd"></path></svg>
+                                            fill-rule="evenodd"></path>
+                                    </svg>
                                 </button>
 
                                 <button class="bn">
-                                    <a href="{{ route('teacher.create') }}" style="color:white;">Add  Teacher</a>
+                                    <a href="{{ route('teacher.create') }}" style="color:white;">Add Teacher</a>
                                     <svg fill="currentColor" viewBox="0 0 24 24" class="ic">
                                         <path
                                             clip-rule="evenodd"
@@ -179,6 +180,11 @@
                     </div>
                     <div class="card shadow-lg border-0 h-40 mt-2" style="border-radius: 1rem;">
                         <div class="row mt-4">
+                                <div class="card-body text-center">
+                                    <h6 class="text-uppercase text-secondary mb-3">Section Capacity Overview</h6>
+                                    <canvas id="sectionCapacityChart" height="260"></canvas>
+                                </div>
+                            
 
                         </div>
                     </div>
@@ -847,6 +853,56 @@
                             text: errorMessages,
                         });
                     });
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('sectionCapacityChart').getContext('2d');
+
+            const sectionData = @json($sectionCapacities);
+
+            const labels = sectionData.map(item => item.name);
+            const studentCounts = sectionData.map(item => item.students);
+            const capacities = sectionData.map(item => item.capacity);
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                            label: 'Current Students',
+                            data: studentCounts,
+                            backgroundColor: '#3674B5'
+                        },
+                        {
+                            label: 'Capacity',
+                            data: capacities,
+                            backgroundColor: '#e0e0e0'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of Students'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    }
+                }
             });
         });
     </script>
