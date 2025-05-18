@@ -330,7 +330,7 @@
         };
 
         setTimeout(() => {
-            speak("Welcome. Would you like voice assistance to log in? Say yes or no.", () => recognition.start());
+            speak("Welcome. Would you like assistance to log in? Say yes or no.", () => recognition.start());
         }, 1000);
     });
 
