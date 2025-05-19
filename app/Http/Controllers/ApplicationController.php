@@ -277,7 +277,10 @@ class ApplicationController extends Controller
 
             // ✅ Send WhatsApp message
             try {
-                $twilio = new Client(env('TWILIO_SID'), env('TWILIO_AUTH_TOKEN'));
+                $twilio = new Client(config('services.twilio.sid'), config('services.twilio.token'));
+
+                Log::info('SID: ' . config('services.twilio.sid'));
+                Log::info('TOKEN: ' . config('services.twilio.token') ? 'OK' : 'Missing');
 
                 $message = "🎉 Your application has been approved!\n\n" .
                     "👧 Student Account:\n" .
@@ -291,7 +294,7 @@ class ApplicationController extends Controller
                 $twilio->messages->create(
                     'whatsapp:' . $application->parents_contact_numbers,
                     [
-                        'from' => env('TWILIO_WHATSAPP_NUMBER'),
+                        'from' => config('services.twilio.from'),
                         'body' => $message,
                     ]
                 );

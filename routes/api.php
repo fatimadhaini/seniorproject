@@ -31,3 +31,4 @@ Route::post('/face-login-check', function (Request $request) {
 
     return response()->json(['success' => false]);
 });
+Route::post('/assistant/question', [App\Http\Controllers\AssistantController::class, 'answer']);

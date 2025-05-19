@@ -50,6 +50,10 @@ Route::get('/', function () {
 Route::get('/face/register', function () {
     return view('face.register');
 });
+Route::get('/assistant', function () {
+    return view('assistant');
+})->name('assistant');
+
 
 Route::post('/face/save-descriptor', [FaceDescriptorController::class, 'store']);
 

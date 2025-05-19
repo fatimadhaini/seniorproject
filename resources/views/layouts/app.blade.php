@@ -52,4 +52,5 @@
     </div>
     @endif
     @endguest
+    
 </x-layouts.base>

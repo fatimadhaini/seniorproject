@@ -257,7 +257,7 @@
                     <span class="nav-link-text ms-1">Classes</span>
                 </a>
             </li>
-            
+
 
 
             @endif
@@ -273,6 +273,17 @@
                     <span class="nav-link-text ms-1">Register Face ID</span>
                 </a>
             </li>
+            <li class="nav-item pb-2">
+                <a class="nav-link {{ request()->routeIs('assistant') ? 'active' : '' }}" href="{{ route('assistant') }}" title="Ask Assistant">
+                    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                            <path class="color-background" d="M320 32C165.9 32 32 132.3 32 256c0 50.1 21.4 96.2 57.1 132.2-5.2 27.6-19.8 49.9-20.1 50.3a16 16 0 0 0 13.7 24.4c61.3 0 111.3-25.1 139.9-45.2a299.2 299.2 0 0 0 97.4 15.3c154.1 0 288-100.3 288-224S474.1 32 320 32z" />
+                        </svg>
+                    </div>
+                    <span class="nav-link-text ms-1">Ask Assistant</span>
+                </a>
+            </li>
+
 
         </ul>
     </div>
