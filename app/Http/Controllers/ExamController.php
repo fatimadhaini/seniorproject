@@ -140,8 +140,11 @@ class ExamController extends Controller
     }
     public function viewBySection($sectionId)
     {
-        $exams = Exam::whereHas('sectionSubjectTeacher', function ($query) use ($sectionId) {
-            $query->where('section_id', $sectionId);
+
+        $teacherId = Auth::user()->teacher->id; // current logged-in teacher
+        $exams = Exam::whereHas('sectionSubjectTeacher', function ($query) use ($sectionId, $teacherId) {
+            $query->where('section_id', $sectionId)
+                ->where('teacher_id', $teacherId);
         })->with(['sectionSubjectTeacher.section.grade', 'sectionSubjectTeacher.subject', 'event'])->get();
 
         return view('teacherdash.exams.index', compact('exams'));

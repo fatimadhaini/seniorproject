@@ -20,11 +20,19 @@ class DashboardController extends Controller
 
         // Pass the user's role to the view
         return view('dashboard', compact('user'));
-    // Removed incorrect use statement
+        // Removed incorrect use statement
     }
     public function __invoke()
     {
-        $sectionsSubjects = SectionSubjectTeacher::with(['section', 'subject', 'teacher'])->get();
+        $activeAcademicYear = AcademicYear::where('status', 'pending')->first();
+
+        $sectionsSubjects = SectionSubjectTeacher::with(['section', 'subject', 'teacher'])
+            ->whereHas('section', function ($query) use ($activeAcademicYear) {
+                $query->where('academic_year_id', $activeAcademicYear->id);
+            })
+            ->whereHas('subject')
+            ->whereHas('teacher')
+            ->get();
         $studentCount = Student::count();
         $teacherCount = Teacher::count();
         $pendingApplicationCount = Application::where('status', 'pending')->count();

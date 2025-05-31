@@ -38,14 +38,21 @@ class Login extends Component
         $this->validate();
 
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember_me)) {
-            $user = Auth::user(); // already logged in
+            $user = Auth::user();
 
-            // Role-based redirect
+            // ❗ Check if the user is a teacher and their account is inactive
+            if ($user->role_id == 2 && $user->teacher && $user->teacher->status == 0) {
+                Auth::logout();
+                session()->flash('error', 'Your account is not active. Please contact the admin.');
+                return redirect()->route('login');
+            }
+
+            // ✅ Role-based redirect
             return match ($user->role_id) {
-                1 => redirect()->route('dashboard'),                // Admin
-                2 => redirect()->route('teacherdash.dashboard'),    // Teacher
-                3 => redirect()->route('studentdash.dashboard'),    // Student
-                4 => redirect()->route('parentdash.dashboard'),     // Parent (if added)
+                1 => redirect()->route('dashboard'),
+                2 => redirect()->route('teacherdash.dashboard'),
+                3 => redirect()->route('studentdash.dashboard'),
+                4 => redirect()->route('parentdash.dashboard'),
                 default => abort(403, 'Unknown role'),
             };
         } else {
